@@ -8,7 +8,7 @@
           {
             "type": "command",
             "command": "d=\"$PWD\"; while [ \"$d\" != / ] && [ ! -f \"$d/agent/trellis.json\" ]; do d=$(dirname \"$d\"); done; [ -f \"$d/agent/trellis.json\" ] && python3 \"$d/agent/tools/scripts/scan.py\" \"$d\" --brief || true",
-            "statusMessage": "Kitebough：检查项目状态"
+            "statusMessage": "Kitebough｜检查项目状态"
           }
         ]
       },
@@ -18,7 +18,7 @@
           {
             "type": "command",
             "command": "d=\"$PWD\"; while [ \"$d\" != / ] && [ ! -f \"$d/agent/trellis.json\" ]; do d=$(dirname \"$d\"); done; [ -f \"$d/agent/trellis.json\" ] && python3 \"$d/agent/tools/scripts/scan.py\" \"$d\" --brief --after-compact || true",
-            "statusMessage": "Kitebough：核对 memory"
+            "statusMessage": "Kitebough｜核对会话记忆"
           }
         ]
       }
@@ -29,7 +29,8 @@
         "hooks": [
           {
             "type": "command",
-            "command": "d=\"$PWD\"; while [ \"$d\" != / ] && [ ! -f \"$d/agent/trellis.json\" ]; do d=$(dirname \"$d\"); done; [ -f \"$d/agent/trellis.json\" ] && python3 \"$d/agent/tools/scripts/guard_delete.py\" --codex || true"
+            "command": "d=\"$PWD\"; while [ \"$d\" != / ] && [ ! -f \"$d/agent/trellis.json\" ]; do d=$(dirname \"$d\"); done; [ -f \"$d/agent/trellis.json\" ] && python3 \"$d/agent/tools/scripts/guard_delete.py\" --codex || true",
+            "statusMessage": "Kitebough｜检查文件删除"
           }
         ]
       }

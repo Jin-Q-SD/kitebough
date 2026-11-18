@@ -190,4 +190,5 @@ upgrade 只管规则、脚本、模板和 hooks。`AGENTS.md`、`README.md`、`P
 两边的差别：
 - **删除 `_delete/` 里的东西时怎么确认**：Claude Code 会弹出确认窗口，由用户批准。Codex 不支持弹窗确认，所以守卫先拒绝，并提示 agent 去问用户；用户在对话里明确同意后，agent 在命令末尾加上 `# trellis:confirmed` 再执行才会放行。这一层要靠 agent 遵守，弱于 Claude Code 的弹窗。
 - **找项目根目录**：Codex 没有项目根目录变量，hook 命令会从当前目录逐级向上找 `agent/trellis.json`，所以在子目录里开会话也能生效。
+- **显示名称**：每条 Codex Hook 都显式设置 `statusMessage`，格式为 `Kitebough｜动作`。使用全角竖线，两侧无空格，名称不加编号。
 - **信任**：Codex 的项目 hooks 必须先在 `/hooks` 里信任才会运行，内容有改动后要重新信任。
