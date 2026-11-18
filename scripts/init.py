@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Trellis init：在目标文件夹里生成入口文件、agent/ 目录、hooks 和选定的产出目录（只创建，不覆盖）。"""
+"""Kitebough init：在目标文件夹里生成入口文件、agent/ 目录、hooks 和选定的产出目录（只创建，不覆盖）。"""
 import argparse
 import datetime
 import hashlib
@@ -10,7 +10,7 @@ import subprocess
 import sys
 from collections import OrderedDict
 
-TRELLIS_VERSION = "1.2"
+TRELLIS_VERSION = "1.3"
 SKILL = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 TPL = os.path.join(SKILL, "templates")
 
@@ -60,6 +60,7 @@ def managed_files(ctx):
     for f in sorted(os.listdir(gdir)):
         files["agent/guidelines/" + f] = tpl("agent/guidelines/" + f, ctx)
     files["agent/memory/_template.md"] = tpl("agent/memory/_template.md", ctx)
+    files["agent/tasks/_template.md"] = tpl("agent/tasks/_template.md", ctx)
     for s in SCRIPTS:
         with open(os.path.join(SKILL, "scripts", s), encoding="utf-8") as fh:
             files["agent/tools/scripts/" + s] = fh.read()
@@ -140,7 +141,7 @@ def main():
     if not os.path.isdir(root):
         sys.exit("目标文件夹不存在：%s" % root)
     if os.path.exists(os.path.join(root, "agent", "trellis.json")):
-        sys.exit("已经是 trellis 项目（agent/trellis.json 已存在），请改用 tidy 或 upgrade。")
+        sys.exit("已经是 Kitebough 项目（agent/trellis.json 已存在），请改用 tidy 或 upgrade。")
 
     dirs = [d.strip() for d in a.dirs.split(",") if d.strip()]
     unknown = [d for d in dirs if d not in DIRS]
@@ -191,7 +192,7 @@ def main():
             base[relpath] = sha(content)
     for hooks_file, src in ((".claude/settings.json", "settings.json"), (".codex/hooks.json", "codex-hooks.json")):
         if hooks_file in w.skipped:
-            print("⚠ %s 已存在：trellis 的 hooks 没有写入，需要手动合并（参考 %s）。"
+            print("⚠ %s 已存在：Kitebough 的 hooks 没有写入，需要手动合并（参考 %s）。"
                   % (hooks_file, os.path.join(TPL, "root", src)))
 
     for link, target in init_links():
@@ -241,7 +242,7 @@ def main():
     subprocess.run([sys.executable, os.path.join(root, "agent", "tools", "scripts", "reindex.py"), root],
                    check=False, stdout=subprocess.DEVNULL)
 
-    print("## trellis init 完成（v%s）：%s\n" % (TRELLIS_VERSION, root))
+    print("## Kitebough init 完成（v%s）：%s\n" % (TRELLIS_VERSION, root))
     print("### 已创建 (%d)" % len(w.created))
     for c in w.created:
         print("- " + c)
@@ -249,7 +250,7 @@ def main():
         print("\n### 已跳过（已存在，未覆盖）(%d)" % len(w.skipped))
         for s in w.skipped:
             print("- " + s)
-        print("\n跳过的 AGENTS.md / CLAUDE.md / README.md / settings.json 需要手动合并 trellis 的内容。")
+        print("\n跳过的 AGENTS.md / CLAUDE.md / README.md / settings.json 需要手动合并 Kitebough 的内容。")
     print("\n已生成初始索引。下一步：迁移已有文件（先给用户确认计划）→ 填 PROJECT.md / README.md → 写第一条 memory → 运行 agent/tools/scripts/reindex.py")
 
 

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Trellis 删除守卫（PreToolUse hook）：拦截项目内的删除命令，改为移进 _delete/；清空 _delete/ 需用户确认（Codex 用 --codex 和确认标记）。"""
+"""Kitebough 删除守卫（PreToolUse hook）：拦截项目内的删除命令，改为移进 _delete/；清空 _delete/ 需用户确认（Codex 用 --codex 和确认标记）。"""
 import json
 import os
 import re
@@ -9,11 +9,11 @@ import sys
 DELETE_CMDS = {"rm", "rmdir", "unlink", "shred", "srm"}
 PREFIXES = {"sudo", "command", "builtin", "exec", "nohup", "time"}
 
-DENY_REASON = ("trellis 规则：项目内不直接删除文件。请先征得用户同意，再把文件移进 _delete/"
+DENY_REASON = ("Kitebough 规则：项目内不直接删除文件。请先征得用户同意，再把文件移进 _delete/"
                "（保留原路径，并在 _delete/README.md 登记）。已纳入 git 的应用代码可以在用户同意后用 git rm。")
-ASK_REASON = "trellis：这条命令会永久删除 _delete/ 里的文件，需要用户明确同意。"
+ASK_REASON = "Kitebough：这条命令会永久删除 _delete/ 里的文件，需要用户明确同意。"
 CONFIRM_MARK = "# trellis:confirmed"
-CODEX_REASON = ("trellis：这条命令会永久删除 _delete/ 里的文件。先在对话中向用户说明要删什么（文件数、大小）并询问；"
+CODEX_REASON = ("Kitebough：这条命令会永久删除 _delete/ 里的文件。先在对话中向用户说明要删什么（文件数、大小）并询问；"
                 "只有用户明确同意后，才在同一条命令末尾加上 `" + CONFIRM_MARK + "` 重新执行。没有用户同意，绝不能加这个标记。")
 
 

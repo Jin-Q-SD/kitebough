@@ -17,6 +17,6 @@
 
 - **给 agent 文件**：直接丢进 `import/`（丢在根目录也可以）。agent 会按规则改名，放到该去的地方；拿不准的会留在原地并问你。
 - **让 agent 记住一条规则**：直接说"记成规则"，它会写进 `agent/guidelines/`。
-- **整理和体检**：说 `/trellis tidy`。
+- **整理和体检**：说 `/kitebough tidy`。
 - **删除**：agent 不会真的删除文件，只会移进 `_delete/`。确认不需要了，再让它清空。
 - **用 Codex 的话**：第一次打开项目时在 Codex 里执行 `/hooks`，信任项目的 hooks。这些 hooks 负责提醒和拦截删除。

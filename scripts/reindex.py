@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
-"""Trellis reindex：根据 frontmatter 重新生成 agent/guidelines、agent/memory、agent/tools 的 INDEX.md。"""
+"""Kitebough reindex：根据 frontmatter 重新生成 agent/guidelines、agent/memory、agent/tools 的 INDEX.md。"""
 import os
 import re
 import sys
 from collections import Counter, OrderedDict
 
-HEADER = "<!-- 由 trellis reindex.py 自动生成，请勿手改。改各文件的 frontmatter 后重新运行。 -->\n"
+HEADER = "<!-- 由 Kitebough reindex.py 自动生成，请勿手改。改各文件的 frontmatter 后重新运行。 -->\n"
 warnings = []
 
 
@@ -21,7 +21,7 @@ def find_root(arg):
             if parent == d:
                 break
             d = parent
-    sys.exit("找不到 trellis 项目（agent/trellis.json）。请把项目路径作为参数传入。")
+    sys.exit("找不到 Kitebough 项目（agent/trellis.json）。请把项目路径作为参数传入。")
 
 
 def frontmatter(path):

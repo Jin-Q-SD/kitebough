@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Trellis scan：只读体检，列出待整理的文件、命名问题、失效链接、未归档旧版本、需重组的目录、git 状态等。"""
+"""Kitebough scan：只读体检，列出待整理的文件、命名问题、失效链接、未归档旧版本、需重组的目录、git 状态等。"""
 import json
 import os
 import re
@@ -12,7 +12,7 @@ STD_ROOT = {"AGENTS.md", "CLAUDE.md", "README.md", "agent", "import", "_delete"}
 DATE_RE = re.compile(r"^\d{6}-")
 VER_RE = re.compile(r"^(.*)-v(\d{2,})(\.[^.]+)?$")
 LINK_RE = re.compile(r"\[[^\]]*\]\(([^)\s]+)(?:\s+\"[^\"]*\")?\)")
-COMPACT_NOTE = ("[trellis] 上下文刚被压缩。先检查本次会话的进展（决定、产出、文件整理）是否已经写进 agent/memory/ "
+COMPACT_NOTE = ("[Kitebough] 上下文刚被压缩。先检查本次会话的进展（决定、产出、文件整理）是否已经写进 agent/memory/ "
                 "里本次会话的记录；没有就现在补写或更新，再继续手上的工作。")
 
 
@@ -43,7 +43,7 @@ def tree_size(p):
 
 
 def preview(root):
-    print("## 非 trellis 项目：根目录现状\n")
+    print("## 非 Kitebough 项目：根目录现状\n")
     print("`%s`\n" % root)
     entries = sorted(os.listdir(root))
     if not entries:
@@ -177,7 +177,7 @@ def report(root, cfg, brief=False):
     for dp, dn, fn in os.walk(root):
         dn[:] = [d for d in dn if d not in SKIP_DIRS and not d.startswith(".") and os.path.join(dp, d) not in skip_tree]
         r = os.path.relpath(dp, root).replace(os.sep, "/")
-        if r in (".", "agent/memory") or "/_archive" in "/" + r or r.startswith("deliverables/"):
+        if r in (".", "agent/memory", "agent/tasks") or "/_archive" in "/" + r or r.startswith("deliverables/"):
             continue
         n = len([f for f in fn if not f.startswith(".") and f != "README.md"])
         if n > threshold:
@@ -243,13 +243,13 @@ def print_brief(rep, after_compact):
     if after_compact:
         lines.append(COMPACT_NOTE)
     if parts:
-        lines.append("[trellis] 待处理：" + "；".join(parts) + "。规则见 agent/guidelines/。")
+        lines.append("[Kitebough] 待处理：" + "；".join(parts) + "。规则见 agent/guidelines/。")
     if lines:
         print("\n".join(lines))
 
 
 def print_full(rep, cfg, threshold):
-    out = ["## trellis 体检：%s\n" % cfg.get("project_name", "")]
+    out = ["## Kitebough 体检：%s\n" % cfg.get("project_name", "")]
 
     def sec(title, rows, hint=""):
         if rows:
@@ -301,7 +301,7 @@ def main():
         rep = report(root, cfg, brief=brief)
     except Exception as e:  # hook 里出错不能打断会话
         if brief:
-            print("[trellis] scan 出错：%s" % e)
+            print("[Kitebough] scan 出错：%s" % e)
             return
         raise
     if brief:

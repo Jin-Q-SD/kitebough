@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Trellis upgrade：把项目里的规则、脚本、模板、hooks 和最新版 trellis 做三方比较，安全的更新可一键应用，冲突逐条处理。
+"""Kitebough upgrade：把项目里的规则、脚本、模板、hooks 和最新版 Kitebough 做三方比较，安全的更新可一键应用，冲突逐条处理。
 
 用法：
   upgrade.py <项目>                    只读报告
@@ -30,7 +30,7 @@ LABELS = OrderedDict([
 def load(root):
     p = os.path.join(root, "agent", "trellis.json")
     if not os.path.isfile(p):
-        sys.exit("不是 trellis 项目：%s" % root)
+        sys.exit("不是 Kitebough 项目：%s" % root)
     with open(p, encoding="utf-8") as f:
         return p, json.load(f, object_pairs_hook=OrderedDict)
 
@@ -126,7 +126,7 @@ def main():
             print("\n仍需手动处理：\n" + "\n".join("- " + r for r in left))
         return
 
-    print("## trellis upgrade 报告：项目 v%s → 最新 v%s\n" % (cfg.get("trellis", "?"), init.TRELLIS_VERSION))
+    print("## Kitebough upgrade 报告：项目 v%s → 最新 v%s\n" % (cfg.get("trellis", "?"), init.TRELLIS_VERSION))
     groups = OrderedDict((k, []) for k in LABELS)
     for rel, (state, _) in res.items():
         groups[state].append(rel)

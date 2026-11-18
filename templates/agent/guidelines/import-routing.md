@@ -12,7 +12,7 @@ category: workspace
 
 - 每次会话开始时看一眼 `import/` 和根目录。
 - 用户提到"整理"、"我放了个文件"、"刚丢进去的"之类的时候。
-- 用户说 `/trellis tidy` 时。
+- 用户说 `/kitebough tidy` 时。
 
 只读的体检可以用 `python3 agent/tools/scripts/scan.py .`。
 

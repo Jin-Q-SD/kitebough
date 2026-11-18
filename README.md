@@ -1,8 +1,8 @@
-# trellis
+# Kitebough（鸢栖）
 
 > A skill for Claude Code and Codex that turns any folder into a project structured for human–agent collaboration, then keeps it tidy as the project grows. The docs and templates are in Chinese.
 
-**trellis**（棚架）是一个 Claude Code / Codex skill。它把任意文件夹整理成"人与 agent 协作"的项目结构，并在项目推进中持续维护：先定好结构，内容随项目自然生长。
+**Kitebough（鸢栖）** 原名 Trellis，是一个 Claude Code / Codex skill。它把任意文件夹整理成"人与 agent 协作"的项目结构，并在项目推进中持续维护：先定好结构，内容随项目自然生长。
 
 ## 它会搭出什么
 
@@ -15,6 +15,7 @@
 │   ├── PROJECT.md     # 项目简报和当前状态
 │   ├── guidelines/    # 长期规则（带索引）
 │   ├── memory/        # 以会话为单位的记忆 yymmdd-three-words.md（带索引）
+│   ├── tasks/         # 任务页模板，用到跨会话交接时再建任务页
 │   └── tools/         # 项目专属的 skill、subagent、脚本、线上工具
 ├── import/            # 收件箱：随手丢文件，agent 负责整理
 └── 按需创建：research/ docs/ design/ <app>/ deliverables/ _delete/
@@ -27,8 +28,9 @@
 - **不直接删除**：删除只是移进 `_delete/`，保留原路径并登记；只有你明确说要清空时才真正删除。
 - **人类可读**：每个产出目录有一个用人话写的 README；文件统一命名为 `yymmdd-描述-v01.ext`；旧版本放进同目录的 `_archive/`。
 - **memory 增量记录**：由 agent 在检查点（做出决定、产出文件等之后）写入，不等到会话结束才记，避免上下文过长或会话中断时漏记。
+- **可选任务页**：跨会话任务可复制 `agent/tasks/_template.md`，记录目标、范围、验收条件、相关规则、进度和下一步。把进行中的任务页链接到 `agent/PROJECT.md`，并和相关 memory 双向链接。小改动沿用现有流程。
 - **版本管理三种模式**：`project` 协作（整个项目一个仓库）、`app` 只发布成品（仓库只在应用目录）、`none`；模式之间可以互相切换，切换时保留提交历史。
-- **规则住在项目里**：init 之后，规则、脚本和 hooks 都复制进了项目，不依赖这个 skill 也能运转；`/trellis upgrade` 用三方比较把新版规则合并进旧项目，不会覆盖项目自己改过的部分。
+- **规则住在项目里**：init 之后，规则、脚本和 hooks 都复制进了项目，不依赖这个 skill 也能运转；`/kitebough upgrade` 用三方比较把新版规则合并进旧项目，不会覆盖项目自己改过的部分。
 
 ## Hooks（Claude Code 和 Codex 都支持）
 
@@ -45,23 +47,25 @@ Codex 要求项目里的 hooks 先经过信任：第一次打开项目时在 Cod
 需要 Python 3（只用标准库）。
 
 ```bash
-git clone https://github.com/Jin-Q-SD/trellis.git ~/.claude/skills/trellis
+git clone https://github.com/Jin-Q-SD/kitebough.git ~/.claude/skills/kitebough
 ```
 
 在 Codex 中使用：
 
 ```bash
-mkdir -p ~/.agents/skills && ln -s ~/.claude/skills/trellis ~/.agents/skills/trellis
+mkdir -p ~/.agents/skills && ln -s ~/.claude/skills/kitebough ~/.agents/skills/kitebough
 ```
+
+已有项目可以用 `/kitebough upgrade` 取得新版规则和任务页模板。项目配置继续使用 `agent/trellis.json`，原有项目可以直接升级。旧版入口文档里的 `/trellis` 可换成 `/kitebough`。
 
 ## 使用
 
 | 命令 | 作用 |
 |---|---|
-| `/trellis` | 初始化当前文件夹（已经是 trellis 项目时，改为执行 tidy） |
-| `/trellis tidy` | 整理 import 和根目录，并做一次全面体检 |
-| `/trellis reindex` | 重建 `agent/` 下的索引 |
-| `/trellis upgrade` | 把项目的规则、脚本和 hooks 升级到最新版 |
+| `/kitebough` | 初始化当前文件夹（已经是 Kitebough 项目时，改为执行 tidy） |
+| `/kitebough tidy` | 整理 import 和根目录，并做一次全面体检 |
+| `/kitebough reindex` | 重建 `agent/` 下的索引 |
+| `/kitebough upgrade` | 把项目的规则、脚本和 hooks 升级到最新版 |
 
 也可以直接用自然语言触发，例如"初始化这个项目"、"整理一下 import"。
 

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Trellis add_dir：按约定新建标准目录（含 README），并同步 trellis.json、AGENTS.md 目录地图和 README.md。"""
+"""Kitebough add_dir：按约定新建标准目录（含 README），并同步 trellis.json、AGENTS.md 目录地图和 README.md。"""
 import argparse
 import json
 import os
@@ -24,7 +24,7 @@ def find_root(start):
             return d
         parent = os.path.dirname(d)
         if parent == d:
-            sys.exit("找不到 trellis 项目（agent/trellis.json）。")
+            sys.exit("找不到 Kitebough 项目（agent/trellis.json）。")
         d = parent
 
 

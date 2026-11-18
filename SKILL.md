@@ -1,22 +1,22 @@
 ---
-name: trellis
-description: 把一个文件夹整理成"人与 agent 协作"的项目结构（trellis），并持续维护它。用于：开启任何与 agent 合作的新项目、把现有文件夹整理为项目文件夹、搭项目脚手架/骨架、初始化 AGENTS.md / CLAUDE.md / agent 目录（guidelines、memory、tools）；也用于日常维护：整理 import 目录或根目录里乱丢的文件、项目体检、重建 agent 索引、把旧项目的规则升级到新版 trellis。触发词包括 /trellis、/trellis tidy、/trellis reindex、/trellis upgrade、"初始化项目"、"整理项目文件夹"、"整理一下 import"、"set up this project for agents"。
+name: kitebough
+description: 把一个文件夹整理成"人与 agent 协作"的项目结构（Kitebough），并持续维护它。用于：开启任何与 agent 合作的新项目、把现有文件夹整理为项目文件夹、搭项目脚手架/骨架、初始化 AGENTS.md / CLAUDE.md / agent 目录（guidelines、memory、tools）；也用于日常维护：整理 import 目录或根目录里乱丢的文件、项目体检、重建 agent 索引、把旧项目的规则升级到新版 Kitebough。触发词包括 /kitebough、/kitebough tidy、/kitebough reindex、/kitebough upgrade、"初始化项目"、"整理项目文件夹"、"整理一下 import"、"set up this project for agents"。
 ---
 
-# Trellis
+# Kitebough（鸢栖）
 
-Trellis 是一个让项目沿着它生长的棚架：先定结构，内容随项目推进自然沉淀。它有四种模式：
+Kitebough 是一个让项目沿着它生长的棚架：先定结构，内容随项目推进自然沉淀。它有四种模式：
 
 | 模式 | 触发 | 做什么 |
 |---|---|---|
-| **init** | `/trellis`，或用户要新建/整理项目文件夹 | 生成入口文件、`agent/` 目录、hooks、版本管理和产出目录，迁移已有文件 |
-| **tidy** | `/trellis tidy`，或用户要整理/体检 | 整理 `import/` 和根目录，检查链接、README、版本、重组、`_delete/`、git 状态 |
-| **reindex** | `/trellis reindex`，或改动了 agent/ 下的文件 | 重新生成 `agent/` 下三个 INDEX.md |
-| **upgrade** | `/trellis upgrade` | 把项目里的规则、脚本、模板、hooks 和最新版 trellis 做三方比较并合并 |
+| **init** | `/kitebough`，或用户要新建/整理项目文件夹 | 生成入口文件、`agent/` 目录、hooks、版本管理和产出目录，迁移已有文件 |
+| **tidy** | `/kitebough tidy`，或用户要整理/体检 | 整理 `import/` 和根目录，检查链接、README、版本、重组、`_delete/`、git 状态 |
+| **reindex** | `/kitebough reindex`，或改动了 agent/ 下的文件 | 重新生成 `agent/` 下三个 INDEX.md |
+| **upgrade** | `/kitebough upgrade` | 把项目里的规则、脚本、模板、hooks 和最新版 Kitebough 做三方比较并合并 |
 
 本 skill 的路径记为 `$SKILL`（即本文件所在目录）。脚本只用 Python 标准库。
 
-如果目标文件夹里已有 `agent/trellis.json`，说明已经是 trellis 项目：用户说 `/trellis` 时默认走 **tidy**，不要重新 init。
+如果目标文件夹里已有 `agent/trellis.json`，说明已经是 Kitebough 项目：用户说 `/kitebough` 时默认走 **tidy**，不要重新 init。
 
 ---
 
@@ -29,7 +29,7 @@ Trellis 是一个让项目沿着它生长的棚架：先定结构，内容随项
 python3 "$SKILL/scripts/scan.py" <目标文件夹>
 ```
 
-非 trellis 项目会输出根目录现状（每项的文件数、大小、是否 git 仓库）。
+非 Kitebough 项目会输出根目录现状（每项的文件数、大小、是否 git 仓库）。
 
 ### 2. 收集信息：先推断，只问必要的
 
@@ -84,7 +84,7 @@ python3 "$SKILL/scripts/init.py" <目标文件夹> \
   --dirs research,docs,design,app,deliverables --app-slug my-app \
   --git project|app|none [--agent-contrib] [--root-local-repo] [--lfs]
 ```
-- 只创建、不覆盖：已存在的同名文件会跳过并报告。跳过的 `AGENTS.md`、`CLAUDE.md`、`README.md`、`.claude/settings.json` 需要你手动合并（保留用户原内容，补进 trellis 的部分），合并前先告诉用户。
+- 只创建、不覆盖：已存在的同名文件会跳过并报告。跳过的 `AGENTS.md`、`CLAUDE.md`、`README.md`、`.claude/settings.json` 需要你手动合并（保留用户原内容，补进 Kitebough 的部分），合并前先告诉用户。
 - 会创建软链接，让项目专属的 skill 和 subagent 能被识别：
   - `.claude/skills` 和 `.agents/skills`（Codex）→ `agent/tools/skills`
   - `.claude/agents` → `agent/tools/agents`
@@ -105,16 +105,16 @@ python3 "$SKILL/scripts/init.py" <目标文件夹> \
 - 项目语言是英文时，把生成的人类可读文件（README 们）翻成英文。
 
 ### 6. 写第一条 memory 并建索引
-- 按 `agent/memory/_template.md` 写 `agent/memory/<yymmdd>-project-trellis-init.md`，迁移表放进"文件整理记录"一节。
+- 按 `agent/memory/_template.md` 写 `agent/memory/<yymmdd>-project-kitebough-init.md`，迁移表放进"文件整理记录"一节。
 - 运行 `python3 agent/tools/scripts/reindex.py`。
 
 ### 7. 汇报
 告诉用户：
 - 建了哪些目录，迁移了什么，还有哪些文件待确认；
 - 版本管理用的是哪种模式；
-- 怎么和 agent 协作：丢文件进 `import/`、说"记成规则"、说 `/trellis tidy`；
+- 怎么和 agent 协作：丢文件进 `import/`、说"记成规则"、说 `/kitebough tidy`；
 - 哪些信息还标着"待补充"，等以后在对话中补上；
-- 用 Codex 的话，第一次打开项目时要在 Codex 里执行 `/hooks`，审核并信任 trellis 的 hooks，否则 hooks 不会运行。hooks 文件以后有改动（比如 upgrade 之后），需要重新信任一次。
+- 用 Codex 的话，第一次打开项目时要在 Codex 里执行 `/hooks`，审核并信任 Kitebough 的 hooks，否则 hooks 不会运行。hooks 文件以后有改动（比如 upgrade 之后），需要重新信任一次。
 
 ---
 
@@ -147,7 +147,7 @@ python3 agent/tools/scripts/reindex.py
 
 ## 模式四：upgrade
 
-trellis 本身更新以后，已有的项目不会自动跟着变。每个项目的规则是一份副本，可以各自调整。upgrade 用 init 时记下的基线（`trellis.json` 的 `base`）做三方比较：
+Kitebough 本身更新以后，已有的项目不会自动跟着变。每个项目的规则是一份副本，可以各自调整。upgrade 用 init 时记下的基线（`trellis.json` 的 `base`）做三方比较：
 
 ```bash
 python3 "$SKILL/scripts/upgrade.py" <项目>                  # 只读报告
@@ -168,6 +168,10 @@ python3 "$SKILL/scripts/upgrade.py" <项目> --resolve <路径>  # 冲突合并�
 5. 在 memory 里记一笔这次升级。
 
 upgrade 只管规则、脚本、模板和 hooks。`AGENTS.md`、`README.md`、`PROJECT.md` 这类已经写进项目内容的文件不在比较范围内。如果新版模板的入口文件有结构上的变化，由你读一下模板，向用户提议怎么改。
+
+## 可选：跨会话任务页
+
+跨会话或换 agent 交接时可复制 `agent/tasks/_template.md`，并把任务页链接到项目简报。检查点更新任务页的进度和下一步，以及它与相关 memory 的双向链接。做法见项目内的 `agent/guidelines/memory-and-guidelines.md`。一次会话能完成的小改动沿用现有流程。已有项目可通过 upgrade 获取模板和规则。
 
 ---
 
